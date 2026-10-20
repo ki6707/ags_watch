@@ -40,8 +40,6 @@ export default function AdminOrdersModal({
   const [tempCarrier, setTempCarrier] = useState("");
   const [copiedId, setCopiedId] = useState("");
 
-  if (!isOpen) return null;
-
   // Filtered Orders
   const filteredOrders = useMemo(() => {
     return orders.filter((o) => {
@@ -127,6 +125,8 @@ export default function AdminOrdersModal({
     });
     setEditingAwb(null);
   };
+
+  if (!isOpen) return null;
 
   return (
     <>
@@ -595,3 +595,4 @@ export default function AdminOrdersModal({
     </>
   );
 }
+
