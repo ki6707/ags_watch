@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Search, Heart, ShoppingBag, Truck, Sun, Moon, X, Sparkles, SlidersHorizontal } from "lucide-react";
+import { Search, Heart, ShoppingBag, Truck, Sun, Moon, X, Sparkles, SlidersHorizontal, Package } from "lucide-react";
 import { money } from "../data.js";
 
 export default function Header({
@@ -11,6 +11,8 @@ export default function Header({
   cartTotal,
   onOpenCart,
   onOpenTracking,
+  onOpenAdmin,
+  pendingOrdersCount = 0,
   darkMode,
   setDarkMode,
   onToggleFilters,
@@ -28,6 +30,10 @@ export default function Header({
           <span><strong>2-Year International Warranty</strong> on all timepieces</span>
           <span className="bullet-sep">•</span>
           <span className="highlight-tag">Use code <strong>FIRSTWATCH</strong> for ₹1,500 off</span>
+          <span className="bullet-sep">•</span>
+          <button className="announcement-admin-link" onClick={onOpenAdmin}>
+            <Package size={13} className="inline-icon" /> <strong>Owner Dashboard</strong> ({pendingOrdersCount} to pack)
+          </button>
         </div>
       </div>
 
@@ -90,7 +96,23 @@ export default function Header({
             aria-label="Track your order"
           >
             <Truck size={19} />
-            <span className="action-label">Track Order</span>
+            <span className="action-label">Track</span>
+          </button>
+
+          {/* Store Owner Orders Portal */}
+          <button
+            className="action-btn owner-portal-btn"
+            onClick={onOpenAdmin}
+            aria-label="Store Owner Orders & Packing Portal"
+            title="Open Store Owner Orders & Packing Dashboard"
+          >
+            <div className="badge-wrapper">
+              <Package size={19} className="gold-accent-icon" />
+              {pendingOrdersCount > 0 && (
+                <span className="action-badge owner-badge">{pendingOrdersCount}</span>
+              )}
+            </div>
+            <span className="action-label">Orders</span>
           </button>
 
           {/* Wishlist */}

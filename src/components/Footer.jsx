@@ -1,6 +1,6 @@
 import { ShieldCheck, Truck, Clock, Mail, Phone, MapPin, Award } from "lucide-react";
 
-export default function Footer({ onCategoryClick }) {
+export default function Footer({ onCategoryClick, onOpenAdmin }) {
   return (
     <footer className="site-footer">
       {/* Horology VIP Newsletter */}
@@ -80,7 +80,7 @@ export default function Footer({ onCategoryClick }) {
             <li><a href="#results">14-Day In-Home Return Trial</a></li>
             <li><a href="#results">Watch Movement Calibration</a></li>
             <li><a href="#results">Authenticity Certificate Verification</a></li>
-            <li><a href="#results">Corporate &amp; Milestone Gifting</a></li>
+            <li><button onClick={onOpenAdmin} className="footer-owner-link">📦 Store Owner / Packing Portal</button></li>
           </ul>
         </div>
       </div>

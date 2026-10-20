@@ -10,6 +10,7 @@ import CheckoutModal from "./components/CheckoutModal.jsx";
 import OrderTrackingModal from "./components/OrderTrackingModal.jsx";
 import CompareModal from "./components/CompareModal.jsx";
 import WishlistDrawer from "./components/WishlistDrawer.jsx";
+import AdminOrdersModal from "./components/AdminOrdersModal.jsx";
 import Footer from "./components/Footer.jsx";
 import { PRODUCTS, TYPES, PRICE_BANDS, INITIAL_ORDERS } from "./data.js";
 import { Layers, ArrowUp, Sparkles, Filter } from "lucide-react";
@@ -44,6 +45,7 @@ export default function App() {
   const [wishlistOpen, setWishlistOpen] = useState(false);
   const [checkoutOpen, setCheckoutOpen] = useState(false);
   const [trackingOpen, setTrackingOpen] = useState(false);
+  const [adminOpen, setAdminOpen] = useState(false);
   const [compareOpen, setCompareOpen] = useState(false);
   const [compareEnabled, setCompareEnabled] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
@@ -241,6 +243,39 @@ export default function App() {
     showToast(`Order ${newOrder.orderId} confirmed successfully!`);
   };
 
+  const handleUpdateOrderStatus = (orderId, newStatus, extra = {}) => {
+    setOrders((prev) =>
+      prev.map((o) => {
+        if (o.orderId === orderId) {
+          const updatedSteps = (o.steps || []).map((st, i) => {
+            if (extra.currentStep && i + 1 <= extra.currentStep) {
+              return { ...st, done: true };
+            }
+            return st;
+          });
+          return {
+            ...o,
+            status: newStatus,
+            ...extra,
+            steps: updatedSteps
+          };
+        }
+        return o;
+      })
+    );
+    showToast(`Order ${orderId} updated to: ${newStatus}`);
+  };
+
+  const handleDeleteOrder = (orderId) => {
+    setOrders((prev) => prev.filter((o) => o.orderId !== orderId));
+    showToast(`Order ${orderId} deleted`);
+  };
+
+  const pendingOrdersCount = orders.filter((o) => {
+    const s = (o.status || "").toLowerCase();
+    return s.includes("pending") || s.includes("placed") || s.includes("confirmed");
+  }).length;
+
   // Wishlist toggle
   const handleToggleWishlist = (id) => {
     toggleSetItem(wishlist, setWishlist, id);
@@ -310,6 +345,8 @@ export default function App() {
         cartTotal={cartTotalAmount}
         onOpenCart={() => setCartOpen(true)}
         onOpenTracking={() => setTrackingOpen(true)}
+        onOpenAdmin={() => setAdminOpen(true)}
+        pendingOrdersCount={pendingOrdersCount}
         darkMode={darkMode}
         setDarkMode={setDarkMode}
         onToggleFilters={() => setFiltersOpen((o) => !o)}
@@ -443,9 +480,19 @@ export default function App() {
       )}
 
       {/* Footer */}
-      <Footer onCategoryClick={(type) => handleSelectCategory(type, type === "Sale")} />
+      <Footer
+        onCategoryClick={(type) => handleSelectCategory(type, type === "Sale")}
+        onOpenAdmin={() => setAdminOpen(true)}
+      />
 
       {/* Modals & Drawers */}
+      <AdminOrdersModal
+        isOpen={adminOpen}
+        onClose={() => setAdminOpen(false)}
+        orders={orders}
+        onUpdateOrderStatus={handleUpdateOrderStatus}
+        onDeleteOrder={handleDeleteOrder}
+      />
       {selectedProduct && (
         <ProductDetailModal
           product={selectedProduct}

@@ -579,22 +579,59 @@ export const PROMO_CODES = {
 export const INITIAL_ORDERS = [
   {
     orderId: "AGS-94821",
-    date: "18 Oct 2026",
-    status: "In Transit",
-    currentStep: 3,
+    date: "20 Oct 2026, 11:30 AM",
+    status: "Pending Packing",
+    currentStep: 1,
     carrier: "Blue Dart Express Air",
     awbNumber: "BD992817401IN",
     estimatedDelivery: "Tomorrow by 2:00 PM",
+    recipientName: "Rahul Sharma",
+    recipientPhone: "9820145678",
+    recipientEmail: "rahul.sharma@example.com",
     destination: "Bengaluru, Karnataka - 560001",
+    fullAddress: "Flat 402, Prestige Towers, MG Road, Bengaluru, Karnataka - 560001",
+    paymentMethod: "UPI (Google Pay)",
+    giftWrapped: true,
+    giftMessage: "Happy 30th Birthday Vikram! From Dad & Mom.",
+    deliveryOption: "express",
     items: [
       { name: "AGS Meridian Chrono", option: "Cognac Saddle Leather", qty: 1, price: 1249900, image: "https://images.unsplash.com/photo-1524805444758-089113d48a6d?auto=format&fit=crop&w=500&q=80" }
     ],
-    totalPaid: 1249900,
+    totalPaid: 1279800,
     steps: [
-      { title: "Order Confirmed", time: "18 Oct, 10:30 AM", done: true },
-      { title: "Horology Quality Check Passed", time: "18 Oct, 03:15 PM", done: true },
-      { title: "Dispatched via Express Courier", time: "19 Oct, 08:00 AM", done: true },
-      { title: "Out for Delivery", time: "Expected 20 Oct, 11:00 AM", done: false },
+      { title: "Order Confirmed & Paid", time: "20 Oct, 11:30 AM", done: true },
+      { title: "Horology Quality Check & Packed", time: "Pending", done: false },
+      { title: "Dispatched via Express Courier", time: "Scheduled Today", done: false },
+      { title: "Out for Delivery", time: "Tomorrow Morning", done: false },
+      { title: "Delivered & Signed", time: "Pending", done: false }
+    ]
+  },
+  {
+    orderId: "AGS-73192",
+    date: "19 Oct 2026, 04:15 PM",
+    status: "In Transit",
+    currentStep: 3,
+    carrier: "Blue Dart Express Air",
+    awbNumber: "BD849201940IN",
+    estimatedDelivery: "Today by 6:00 PM",
+    recipientName: "Priyanka Deshmukh",
+    recipientPhone: "9819234567",
+    recipientEmail: "priyanka.d@example.com",
+    destination: "Mumbai, Maharashtra - 400050",
+    fullAddress: "Villa 12, Perry Cross Road, Bandra West, Mumbai, Maharashtra - 400050",
+    paymentMethod: "CREDIT CARD (VISA)",
+    giftWrapped: false,
+    giftMessage: "",
+    deliveryOption: "vip",
+    items: [
+      { name: "Rosewater Meenal Rose Gold", option: "Rose Gold Mesh", qty: 1, price: 1399900, image: "https://images.unsplash.com/photo-1508057198894-247b23fe5ade?auto=format&fit=crop&w=500&q=80" }
+    ],
+    totalPaid: 1399900,
+    steps: [
+      { title: "Order Confirmed & Paid", time: "19 Oct, 04:15 PM", done: true },
+      { title: "Quality Check & Packed", time: "19 Oct, 06:00 PM", done: true },
+      { title: "Dispatched via Express Courier", time: "20 Oct, 08:30 AM", done: true },
+      { title: "Out for Delivery", time: "Today 02:00 PM", done: false },
       { title: "Delivered & Signed", time: "Pending", done: false }
     ]
   }
